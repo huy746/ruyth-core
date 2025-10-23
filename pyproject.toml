@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "ruythcore"
 description = "A Python wrapper for the Discord API"
-readme = { file = "README.MD", content-type = "text/x-md" }
+readme = { file = "README.md", content-type = "text/x-md" }
 license = { file = "LICENSE" }
 requires-python = ">=3.8"
 authors = [{ name = "huy746" }]
