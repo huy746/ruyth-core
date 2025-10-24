@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup (
-    name="ruyth-core",
+    name="ruythcore",
     version="1.0.0",
     packages=find_packages(),
     author="huy746",
