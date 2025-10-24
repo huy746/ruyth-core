@@ -11,3 +11,4 @@ setup(
     url="https://github.com/huy746/ruyth-core",
     packages=find_packages(),
     install
+)
