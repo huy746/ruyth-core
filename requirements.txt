@@ -4,3 +4,4 @@ twine
 aiohttp>=3.8.1
 typing-extensions>=4.0.0
 websockets>=12.0
+python_version>='3.13'
