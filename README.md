@@ -5,7 +5,7 @@
 	</p>
 	<br />
 	<p>
-		<a href="https://discord.com"><img src="https://img.shields.io/badge/join_us-on_discord-5865F2?logo=discord&logoColor=white" alt="Discord server" /></a>
+		<a href="https://discord.gg/MZVrynFHFE"><img src="https://img.shields.io/badge/join_us-on_discord-5865F2?logo=discord&logoColor=white" alt="Discord server" /></a>
 	
 </div>
 
