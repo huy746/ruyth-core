@@ -28,6 +28,6 @@ classifiers = [
 dynamic = ["version", "dependencies"]
 
 [project.urls]
-Documentation = "https://"
+Documentation = "https://docsruythcore.blogspot.com/"
 "Issue tracker" = "https://github.com/huy746/ruyth-core/issues"
 
