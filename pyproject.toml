@@ -31,3 +31,8 @@ dynamic = ["version", "dependencies"]
 Documentation = "https://docsruythcore.blogspot.com/"
 "Issue tracker" = "https://github.com/huy746/ruyth-core/issues"
 
+[tool.setuptools]
+packages = [
+    "ruythcore",
+]
+include-package-data = true
