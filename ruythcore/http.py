@@ -1,22 +1,30 @@
 import aiohttp
-import asyncio
 import json
+from .constants import API_BASE
 
 class HTTPClient:
-    def __init__(self, token):
+    def __init__(self, token: str):
         self.token = token
-        self.base_url = "https://discord.com/api/v10"
-        self.session = aiohttp.ClientSession()
-
-    async def send_message(self, channel_id, content):
-        url = f"{self.base_url}/channels/{channel_id}/messages"
-        headers = {
+        self.base = API_BASE
+        self._headers = {
             "Authorization": f"Bot {self.token}",
             "Content-Type": "application/json"
         }
-        async with self.session.post(url, headers=headers, json={"content": content}) as resp:
-            return await resp.text()
+        self.session = aiohttp.ClientSession(headers=self._headers)
+
+    async def request(self, method: str, endpoint: str, **kwargs):
+        url = f"{self.base}{endpoint}"
+        async with self.session.request(method, url, **kwargs) as resp:
+            text = await resp.text()
+            try:
+                return json.loads(text) if text else None
+            except Exception:
+                return text
+
+    async def send_message(self, channel_id: int, content: str):
+        payload = {"content": content}
+        return await self.request("POST", f"/channels/{channel_id}/messages", json=payload)
 
     async def close(self):
         await self.session.close()
-      
+                 
