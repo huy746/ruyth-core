@@ -1,6 +1,6 @@
 # ruythcore
-[!Sever](https://img.shields.io/badge/join_us-on_discord-5865F2?)
-[!Python](https://img.shields.io/pypi/pyversions/discord.py.svg)
+[![discord](https://img.shields.io/badge/join_us-on_discord-5865F2?)](http://discord.com)
+[![Python](https://img.shields.io/pypi/pyversions/discord.py.svg)](http://makeapullrequest.com)
 
 ## Install
 
@@ -8,7 +8,7 @@
 pip install ruythcore
 ```
 
-### Example
+### Bot Example
 ```bash
 import asyncio
 import ruythcore
@@ -29,3 +29,16 @@ async def on_ready(data):
 
 bot.run()
 ```
+##### Note: Replace YOUR_BOT_TOKEN with your TOKEN . Do not share TOKEN.
+
+### Run
+```bash
+python <namefile>.py
+```
+###### When showing "RuythCore Ready ✅ is successful.
+
+Link
+
+[Sever]()
+
+[Discord API](https://discord.gg/discord-api)
