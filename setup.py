@@ -1,4 +1,3 @@
-# setup.py
 from setuptools import setup, find_packages
 import pathlib
 
@@ -8,7 +7,7 @@ README = (HERE / "README.md").read_text(encoding="utf-8")
 setup(
     name="ruythcore",
     version="1.0.0",
-    description="RuythCore — lightweight Discord-like bot core, not based on discord.py",
+    description="Ruythcore - Api",
     long_description=README,
     long_description_content_type="text/markdown",
     url="https://github.com/huy746/ruyth-core",
