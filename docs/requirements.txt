@@ -1,0 +1,4 @@
+sphinx
+furo
+sphinx-autobuild
+sphinx-rtd-theme
