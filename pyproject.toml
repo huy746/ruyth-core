@@ -34,6 +34,12 @@ docs = [
     "sphinxcontrib_trio==1.1.2"
 ]
 
+test = [
+"pytest",
+"pytest-cov",
+
+]
+
 [project.urls]
 Documentation = "https://docsruythcore.blogspot.com/"
 "Issue tracker" = "https://github.com/huy746/ruyth-core/issues"
