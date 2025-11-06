@@ -1,14 +1,13 @@
 import os
 import sys
 
-# Đảm bảo pytest tìm thấy package cục bộ
+# ép sys.path lấy code trong repo này
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 import ruythcore
-
+print(">>> DEBUG: ruythcore được import từ:", getattr(ruythcore, "__file__", "Không có __file__"))
 
 def test_imports():
-    """Kiểm tra import thành công và có các thuộc tính chính"""
     c = ruythcore.Client("fake-token")
     assert hasattr(c, "http")
     assert hasattr(c, "slash")
