@@ -1,16 +1,17 @@
-import sys
 import os
+import sys
 
-# Thêm đường dẫn gốc của project vào sys.path
-# để pytest có thể import ruythcore khi chạy trên GitHub Actions
+# Thêm đường dẫn thư mục gốc (chứa thư mục "ruythcore")
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-
+try:
+    import ruythcore
+except ImportError as e:
+    raise ImportError(f"Lỗi import ruythcore: {e}")
 
 def test_imports():
-    """Kiểm tra xem Client và các thuộc tính chính có tồn tại không"""
+    """Kiểm tra module ruythcore có import được và class Client hoạt động"""
     c = ruythcore.Client("fake-token")
-    assert hasattr(c, "http"), "Client không có thuộc tính http"
-    assert hasattr(c, "slash"), "Client không có thuộc tính slash"
-    assert hasattr(c, "voice"), "Client không có thuộc tính voice"
-    
+    assert hasattr(c, "http"), "Client thiếu thuộc tính http"
+    assert hasattr(c, "slash"), "Client thiếu thuộc tính slash"
+    assert hasattr(c, "voice"), "Client thiếu thuộc tính voice"
