@@ -9,7 +9,8 @@ if ROOT_DIR not in sys.path:
 
 print("DEBUG: sys.path[0] =", sys.path[0])
 
-# Import lại module sạch để chắc chắn lấy đúng file __init__.py
+# Import lại module sạch đ
+ể chắc chắn lấy đúng file __init__.py
 ruythcore = importlib.import_module("ruythcore")
 
 def test_imports():
