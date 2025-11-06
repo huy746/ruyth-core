@@ -5,7 +5,6 @@ import os
 # để pytest có thể import ruythcore khi chạy trên GitHub Actions
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-import ruythcore
 
 
 def test_imports():
