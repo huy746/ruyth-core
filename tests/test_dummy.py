@@ -1,22 +1,15 @@
 import os
 import sys
-import importlib
 
-# Đảm bảo pytest có thể tìm đúng package ruythcore/
-ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-if ROOT_DIR not in sys.path:
-    sys.path.insert(0, ROOT_DIR)
+# Đảm bảo pytest tìm thấy package cục bộ
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-print("DEBUG: sys.path[0] =", sys.path[0])
+import ruythcore
 
-# Import lại module sạch đ
-ể chắc chắn lấy đúng file __init__.py
-ruythcore = importlib.import_module("ruythcore")
 
 def test_imports():
-    """Kiểm tra Client và các thuộc tính chính"""
-    assert hasattr(ruythcore, "Client"), "Module ruythcore không có class Client"
+    """Kiểm tra import thành công và có các thuộc tính chính"""
     c = ruythcore.Client("fake-token")
-    assert hasattr(c, "http"), "Client thiếu thuộc tính http"
-    assert hasattr(c, "slash"), "Client thiếu thuộc tính slash"
-    assert hasattr(c, "voice"), "Client thiếu thuộc tính voice"
+    assert hasattr(c, "http")
+    assert hasattr(c, "slash")
+    assert hasattr(c, "voice")
