@@ -33,6 +33,7 @@ jobs:
           pip install pytest pytest-cov
 
       - name: Run tests
-        shell: bash
-        run: |
-          PYTHONPATH="$(pwd)" pytest -vs --cov=ruythcore --cov-report term-missing:skip-covered
+  working-directory: ./ruythcore
+  run: |
+    PYTHONPATH="$(pwd)" pytest -vs --cov=ruythcore --cov-report term-missing:skip-covered
+    
