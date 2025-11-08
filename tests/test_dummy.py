@@ -1,7 +1,8 @@
+# test/test_dummy.py
 import os
 import sys
 
-# Thêm folder gốc repo vào path
+# Thêm thư mục root repo vào sys.path để Python tìm thấy ruythcore
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 import ruythcore
