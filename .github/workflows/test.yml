@@ -8,13 +8,13 @@ on:
 jobs:
   pytest:
     runs-on: ubuntu-latest
+
     strategy:
       fail-fast: false
       matrix:
-        python-version: ['3.8']
+        python-version: ["3.8", "3.x"]
 
     name: pytest ${{ matrix.python-version }}
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -27,12 +27,15 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install dependencies
+        working-directory: ./ruythcore
         run: |
           python -m pip install --upgrade pip
-          pip install -e .[test]
-          pip install pytest pytest-cov
+          python -m pip install pytest pytest-cov
+          pip install -e .
 
       - name: Run tests
-  working-directory: ./ruythcore
-  run: |
-    PYTHONPATH="$(pwd)" pytest -vs --cov=ruythcore --cov-report term-missing:skip-covered
+        working-directory: ./ruythcore
+        run: |
+          export PYTHONPATH="$(pwd)"
+          pytest -vs --cov=ruythcore --cov-report term-missing:skip-covered
+          
