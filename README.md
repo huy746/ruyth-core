@@ -39,7 +39,8 @@ python <namefile>.py
 
 
 ## Link
+[Docs](https://docsruythcore.blogspot.com)
 
-[Sever]()
+[Sever](https://discord.gg/MZVrynFHFE)
 
 [Discord API](https://discord.gg/discord-api)
