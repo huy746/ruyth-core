@@ -7,7 +7,7 @@ if repo_root not in sys.path:
     sys.path.insert(0, repo_root)
 
 # In debug xem import từ đâu
-import ruythcore
+import Client from ruythcore
 print(">>> DEBUG: ruythcore được import từ:", getattr(ruythcore, "__file__", "Không có __file__"))
 
 # Nếu không có attribute Client -> ép reload từ đúng file __init__.py
