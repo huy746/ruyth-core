@@ -24,6 +24,6 @@ jobs:
 
       - name: Run pytest
         run: |
-          export PYTHONPATH=$(pwd)
-          pytest -v --cov=ruythcore --cov-report=term-missing
+          # PYTHONPATH trỏ tới thư mục root repo để pytest tìm thấy ruythcore
+          PYTHONPATH=$(pwd) pytest -v --cov=ruythcore --cov-report=term-missing
           
