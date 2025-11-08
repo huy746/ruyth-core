@@ -1,22 +1,15 @@
 import os
 import sys
 
-# ép sys.path trỏ đến thư mục chứa mã nguồn thật
-repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-if repo_root not in sys.path:
-    sys.path.insert(0, repo_root)
+# Thêm path chính xác đến package ruythcore
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "ruythcore")))
 
+import ruythcore
 
-# Nếu không có attribute Client -> ép reload từ đúng file __init__.py
-if not hasattr(ruythcore, "Client"):
-    import importlib
-    print(">>> Cảnh báo: ruythcore không có Client, đang ép reload...")
-    importlib.reload(ruythcore)
+print(">>> DEBUG:", getattr(ruythcore, "__file__", "Không có __file__"))
 
 def test_imports():
-    from ruythcore import Client
-    c = Client("fake-token")
+    c = ruythcore.Client("fake-token")
     assert hasattr(c, "http")
     assert hasattr(c, "slash")
     assert hasattr(c, "voice")
-    
