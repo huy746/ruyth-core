@@ -10,6 +10,10 @@ print(">>> DEBUG:", getattr(ruythcore, "__file__", "Không có __file__"))
 
 def test_imports():
     c = ruythcore.Client("fake-token")
-    assert hasattr(c, "http")
-    assert hasattr(c, "slash")
-    assert hasattr(c, "voice")
+    assert hasattr(c, "http"), "Client thiếu thuộc tính http"
+    assert hasattr(c, "slash"), "Client thiếu thuộc tính slash"
+    assert hasattr(c, "voice"), "Client thiếu thuộc tính voice"
+
+if __name__ == "__main__":
+    test_imports()
+    print(">>> Test import ruythcore thành công!")
