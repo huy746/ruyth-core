@@ -1,8 +1,8 @@
 import os
 import sys
 
-# Thêm path chính xác đến package ruythcore
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "ruythcore")))
+# Thêm folder gốc repo vào path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 import ruythcore
 
@@ -16,4 +16,4 @@ def test_imports():
 
 if __name__ == "__main__":
     test_imports()
-    print(">>> Test import ruythcore thành công!")
+    print(">>> Test import Client thành công!")
