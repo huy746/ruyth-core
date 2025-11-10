@@ -1,6 +1,9 @@
-aiohttp>=3.8.0
+pytest
+pytest-cov
+aiohttp
 asyncio
-pytest>=7.0.0
+websockets
 setuptools
 wheel
 twine
+yarl
