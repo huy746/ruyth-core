@@ -1,5 +1,4 @@
-# test/test_dummy.py
-from ruythcore.client import Client  # import trực tiếp file chứa class
+from ruythcore.client import Client
 
 def test_imports():
     c = Client("fake-token")
@@ -10,4 +9,3 @@ def test_imports():
 if __name__ == "__main__":
     test_imports()
     print(">>> Test import Client thành công!")
-    
