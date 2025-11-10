@@ -1,26 +1,31 @@
 import asyncio
-import pytest
+from unittest.mock import patch
 
-# Import Client từ file client.py
 from ruythcore.client import Client
 
-@pytest.mark.asyncio
 def test_client_init():
     """
-    Test cơ bản: kiểm tra class Client có thể khởi tạo
-    mà không cần thật sự kết nối Gateway hoặc HTTPClient.
+    Test khởi tạo Client mà không cần thật sự khởi tạo HTTPClient hoặc Gateway.
     """
-    # Mock event loop để tránh lỗi "no running event loop"
+    # Tạo loop giả để tránh lỗi RuntimeError
     asyncio.set_event_loop(asyncio.new_event_loop())
 
-    # Fake token (để không gọi API)
-    c = Client("fake-token")
+    # Patch (mock) toàn bộ lớp HTTPClient và Gateway để không chạy code bên trong
+    with patch("ruythcore.client.HTTPClient", autospec=True) as mock_http, \
+         patch("ruythcore.client.Gateway", autospec=True) as mock_gateway:
 
-    # Kiểm tra các thuộc tính chính tồn tại
-    assert hasattr(c, "http")
-    assert hasattr(c, "slash")
-    assert hasattr(c, "voice")
-    assert c.prefix == "!"
-    assert c.token == "fake-token"
+        c = Client("fake-token")
 
-    print(">>> Client khởi tạo thành công!")
+        # Kiểm tra các thuộc tính chính có tồn tại
+        assert hasattr(c, "http")
+        assert hasattr(c, "slash")
+        assert hasattr(c, "voice")
+        assert c.token == "fake-token"
+        assert c.prefix == "!"
+
+        # Kiểm tra mock được gọi đúng
+        mock_http.assert_called_once_with("fake-token")
+        mock_gateway.assert_called_once()
+
+    print(">>> Client init test: PASSED ✅")
+             
