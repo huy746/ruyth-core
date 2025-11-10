@@ -15,6 +15,7 @@ setup(
     packages=find_packages(),
     install_requires=[
         "aiohttp>=3.8.0"
+        "websockets"
     ],
     python_requires=">=3.8",
     license="MIT",
