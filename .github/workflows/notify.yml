@@ -3,7 +3,7 @@ name: Discord Notification
 on:
   push:
     branches:
-      - main  # Branch to watch
+      - main
 
 jobs:
   notify:
@@ -13,10 +13,9 @@ jobs:
       - name: Send Discord Notification
         uses: tsickert/discord-webhook@v6.0.0
         with:
-          webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          username: "GitHub Bot"
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}  # <-- dùng đúng tên secret
+          username: "GitHub"
           avatar-url: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-          content: ""  # empty because we use embed
           embeds: |
             [
               {
