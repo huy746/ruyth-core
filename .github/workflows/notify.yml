@@ -1,20 +1,49 @@
-name: Notify Discord
+name: Discord Notification
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    types: [opened, closed, reopened]
+    branches:
+      - main  # Branch to watch
 
 jobs:
-  discord_notify:
+  notify:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Send message to Discord
+      - name: Send Discord Notification
         uses: tsickert/discord-webhook@v6.0.0
         with:
-          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-          content: |
-            📢 **${{ github.actor }}** vừa đẩy code lên **${{ github.repository }}**
-            💬 Commit: ${{ github.event.head_commit.message }}
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          username: "GitHub Bot"
+          avatar-url: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+          content: ""  # empty because we use embed
+          embeds: |
+            [
+              {
+                "title": "New Push on GitHub",
+                "description": "A new commit has been pushed!",
+                "color": 3066993,
+                "fields": [
+                  {
+                    "name": "Branch",
+                    "value": "${{ github.ref }}",
+                    "inline": true
+                  },
+                  {
+                    "name": "Commit",
+                    "value": "[${{ github.sha }}](https://github.com/${{ github.repository }}/commit/${{ github.sha }})",
+                    "inline": true
+                  },
+                  {
+                    "name": "Author",
+                    "value": "${{ github.actor }}",
+                    "inline": true
+                  }
+                ],
+                "footer": {
+                  "text": "GitHub Actions Notification"
+                },
+                "timestamp": "${{ github.event.head_commit.timestamp }}"
+              }
+            ]
             
