@@ -13,13 +13,12 @@ jobs:
       - name: Send Discord Notification
         uses: tsickert/discord-webhook@v6.0.0
         with:
-          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}  # <-- dùng đúng tên secret
-          username: "GitHub"
-          avatar-url: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}  # secret chứa URL của webhook "Github"
+          content: "."                # bắt buộc có ít nhất 1 ký tự
           embeds: |
             [
               {
-                "title": "New Push on GitHub",
+                "title": "🚀 New Push on GitHub",
                 "description": "A new commit has been pushed!",
                 "color": 3066993,
                 "fields": [
