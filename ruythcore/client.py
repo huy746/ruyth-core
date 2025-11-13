@@ -9,6 +9,13 @@ from .constants import DEFAULT_INTENTS
 
 class Client:
     def __init__(self, token: str, prefix: str = "!"):
+        # Fix CI / test
+        try:
+            if not asyncio.get_event_loop().is_running():
+                asyncio.set_event_loop(asyncio.new_event_loop())
+        except RuntimeError:
+            asyncio.set_event_loop(asyncio.new_event_loop())
+
         self.token = token
         self.prefix = prefix
         self.http = HTTPClient(token)
@@ -19,7 +26,6 @@ class Client:
         self._events = {}
         self.user = None
 
-    # decorators
     def command(self, name: str = None):
         return self.commands.command(name)
 
@@ -32,12 +38,10 @@ class Client:
 
     async def _dispatch(self, ev_name, data):
         if ev_name == "on_ready":
-            # set user if present
             try:
                 self.user = data.get("user") or data.get("user", {})
             except Exception:
                 pass
-            # register slash commands when ready
             try:
                 await self.slash.register_global_commands()
             except Exception:
@@ -61,4 +65,4 @@ class Client:
 class RuythCore(Client):
     """Alias class name for branding"""
     pass
-    
+                 
