@@ -6,9 +6,6 @@ from .http import HTTPClient
 from .voice import VoiceManager
 from .constants import DEFAULT_INTENTS
 
-# Expose names at package level so users can:
-# import ruythcore
-# bot = ruythcore.Client("token")
 __all__ = [
     "Client",
     "RuythCore",
