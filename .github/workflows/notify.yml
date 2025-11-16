@@ -10,38 +10,36 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Send Discord Notification
+      - name: Send Discord Embed
         uses: tsickert/discord-webhook@v6.0.0
         with:
-          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}  # secret chứa URL của webhook "Github"
-          content: "."                # bắt buộc có ít nhất 1 ký tự
-          embeds: |
-            [
-              {
-                "title": "🚀 New Push on GitHub",
-                "description": "A new commit has been pushed!",
-                "color": 3066993,
-                "fields": [
-                  {
-                    "name": "Branch",
-                    "value": "${{ github.ref }}",
-                    "inline": true
-                  },
-                  {
-                    "name": "Commit",
-                    "value": "[${{ github.sha }}](https://github.com/${{ github.repository }}/commit/${{ github.sha }})",
-                    "inline": true
-                  },
-                  {
-                    "name": "Author",
-                    "value": "${{ github.actor }}",
-                    "inline": true
-                  }
-                ],
-                "footer": {
-                  "text": "GitHub Actions Notification"
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+          inputObjectKey: embed
+          embed: |
+            {
+              "title": "🚀 New Push on GitHub",
+              "description": "A new commit has been pushed!",
+              "color": 3066993,
+              "fields": [
+                {
+                  "name": "Branch",
+                  "value": "${{ github.ref }}",
+                  "inline": true
                 },
-                "timestamp": "${{ github.event.head_commit.timestamp }}"
-              }
-            ]
+                {
+                  "name": "Commit",
+                  "value": "[${{ github.sha }}](https://github.com/${{ github.repository }}/commit/${{ github.sha }})",
+                  "inline": true
+                },
+                {
+                  "name": "Author",
+                  "value": "${{ github.actor }}",
+                  "inline": true
+                }
+              ],
+              "footer": {
+                "text": "GitHub Actions Notification"
+              },
+              "timestamp": "${{ github.event.head_commit.timestamp }}"
+            }
             
