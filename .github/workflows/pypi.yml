@@ -1,36 +1,30 @@
 name: Publish to PyPI
 
 on:
-  push:
-    tags:
-      - "v*"      # Ví dụ: v1.0.0, v0.2.5
+  release:
+    types: [published]
 
 jobs:
-  build-and-publish:
-    name: Build and Publish to PyPI
+  build:
     runs-on: ubuntu-latest
+    environment: pypi
+
+    permissions:
+      id-token: write  # BẮT BUỘC CHO TRUSTED PUBLISHER
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Install build tools
-        run: |
-          pip install build twine
+        run: pip install build
 
-      - name: Build source and wheel
-        run: |
-          python -m build
+      - name: Build
+        run: python -m build
 
-      - name: Publish package to PyPI
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-        run: |
-          twine upload dist/*
-          
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        
