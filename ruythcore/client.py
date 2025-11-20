@@ -1,3 +1,5 @@
+# client.py
+
 import asyncio
 from .http import HTTPClient
 from .gateway import Gateway
@@ -9,13 +11,6 @@ from .constants import DEFAULT_INTENTS
 
 class Client:
     def __init__(self, token: str, prefix: str = "!"):
-        # Fix CI / test
-        try:
-            if not asyncio.get_event_loop().is_running():
-                asyncio.set_event_loop(asyncio.new_event_loop())
-        except RuntimeError:
-            asyncio.set_event_loop(asyncio.new_event_loop())
-
         self.token = token
         self.prefix = prefix
         self.http = HTTPClient(token)
@@ -26,6 +21,7 @@ class Client:
         self._events = {}
         self.user = None
 
+    # decorators
     def command(self, name: str = None):
         return self.commands.command(name)
 
@@ -60,9 +56,20 @@ class Client:
         await self.gateway.connect()
 
     def run(self):
-        asyncio.run(self.start())
+        """An toàn cho mọi môi trường asyncio"""
+        try:
+            loop = asyncio.get_running_loop()
+        except RuntimeError:
+            loop = None
+
+        if loop and loop.is_running():
+            # Nếu đang có loop, tạo task
+            asyncio.ensure_future(self.start())
+        else:
+            # Nếu không có loop, chạy bình thường
+            asyncio.run(self.start())
+
 
 class RuythCore(Client):
     """Alias class name for branding"""
     pass
-                 
