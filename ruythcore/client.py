@@ -9,8 +9,14 @@ from .voice import VoiceManager
 from .utils import ensure_task
 from .constants import DEFAULT_INTENTS
 
+
 class Client:
     def __init__(self, token: str, prefix: str = "!"):
+        """
+        Khởi tạo bot Discord
+        token: token bot
+        prefix: ký tự bắt đầu command, ví dụ '!' cho !ping
+        """
         self.token = token
         self.prefix = prefix
         self.http = HTTPClient(token)
@@ -21,17 +27,25 @@ class Client:
         self._events = {}
         self.user = None
 
+    # ------------------------
     # decorators
+    # ------------------------
     def command(self, name: str = None):
+        """Decorator cho text command"""
         return self.commands.command(name)
 
     def slash_command(self, name: str, description: str = ""):
+        """Decorator cho slash command"""
         return self.slash.command(name, description)
 
     def event(self, fn):
+        """Decorator cho event async"""
         self._events[fn.__name__] = fn
         return fn
 
+    # ------------------------
+    # dispatch event nội bộ
+    # ------------------------
     async def _dispatch(self, ev_name, data):
         if ev_name == "on_ready":
             try:
@@ -52,24 +66,35 @@ class Client:
         if ev_name in self._events:
             await self._events[ev_name](data)
 
+    # ------------------------
+    # start / run
+    # ------------------------
     async def start(self):
+        """Start bot async (có thể await trong test / CI)"""
         await self.gateway.connect()
 
     def run(self):
-        """An toàn cho mọi môi trường asyncio"""
+        """
+        Chạy bot an toàn trong mọi môi trường asyncio
+        - Nếu đang có event loop: tạo task
+        - Nếu chưa có loop: asyncio.run()
+        """
         try:
             loop = asyncio.get_running_loop()
         except RuntimeError:
             loop = None
 
         if loop and loop.is_running():
-            # Nếu đang có loop, tạo task
+            # Nếu đang có loop, tạo task và chờ 0s để tránh exit
             asyncio.ensure_future(self.start())
+            loop.run_until_complete(asyncio.sleep(0))
         else:
-            # Nếu không có loop, chạy bình thường
+            # Nếu chưa có loop, chạy bình thường
             asyncio.run(self.start())
 
 
+# Alias cho branding
 class RuythCore(Client):
     """Alias class name for branding"""
     pass
+        
