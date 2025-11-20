@@ -32,10 +32,6 @@ classifiers = [
 dynamic = ["dependencies"]
 
 [project.optional-dependencies]
-docs = [
-    "sphinx==4.4.0",
-    "sphinxcontrib_trio==1.1.2"
-]
 
 test = [
     "pytest",
@@ -43,7 +39,7 @@ test = [
 ]
 
 [project.urls]
-Documentation = "https://docsruythcore.blogspot.com/"
+Documentation = "https://ruythcore.vercel.app/docs"
 "Issue tracker" = "https://github.com/huy746/ruyth-core/issues"
 
 
