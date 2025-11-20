@@ -12,28 +12,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Send Discord Message
+      - name: Send Discord Notification
         uses: tsickert/discord-webhook@v4.0.0
         with:
           webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-          username: "GitHub"
-          avatar-url: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-          embed: |
-            {
-              "title": "📌 New Commit Pushed",
-              "description": "```\n${{ github.event.head_commit.message }}\n```",
-              "color": 5793266,
-              "fields": [
-                {
-                  "name": "Author",
-                  "value": "${{ github.actor }}",
-                  "inline": true
-                },
-                {
-                  "name": "Branch",
-                  "value": "${{ github.ref_name }}",
-                  "inline": true
-                }
-              ]
-            }
+          content: |
+            New push to **main**
+            Commit by: ${{ github.actor }}
+            Message: ${{ github.event.head_commit.message }}
             
