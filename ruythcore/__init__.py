@@ -31,5 +31,5 @@ _module.HTTPClient = HTTPClient
 _module.VoiceManager = VoiceManager
 _module.DEFAULT_INTENTS = DEFAULT_INTENTS
 
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 __author__ = "ruythbot_huy"
