@@ -17,5 +17,10 @@ __all__ = [
     "DEFAULT_INTENTS",
 ]
 
+# GẮN TRỰC TIẾP VÀO MODULE — FIX CHO import ruythcore; ruythcore.Client
+# => người dùng có thể: import ruythcore; bot = ruythcore.Client(...)
+Client = Client
+RuythCore = RuythCore
+
 __version__ = "1.0.0"
 __author__ = "ruythbot_huy"
