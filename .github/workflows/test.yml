@@ -1,4 +1,4 @@
-name: Run Tests
+name: Pytest
 
 on:
   push:
@@ -7,19 +7,23 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
           python-version: "3.11"
 
-      - name: Install deps
+      - name: Install dependencies
         run: |
-          pip install -e .
-          pip install pytest
+          python -m pip install --upgrade pip
+          pip install -e .           # <<<<< CÁI QUAN TRỌNG NHẤT
+          pip install pytest pytest-asyncio pytest-cov aiohttp websockets
 
       - name: Run tests
-        run: pytest -q
-        
+        run: |
+          pytest -q
+          
