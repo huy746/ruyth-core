@@ -1,5 +1,17 @@
-API_BASE = "https://discord.com/api/v10"
 GATEWAY_URL = "wss://gateway.discord.gg/?v=10&encoding=json"
+HTTP_BASE = "https://discord.com/api/v10"
+USER_AGENT = "ruythcore/1.0"
+INTENTS_ALL = 0b111111111111
 
-# Basic intents (guild messages + direct messages)
-DEFAULT_INTENTS = 513
+OP_DISPATCH = 0
+OP_HEARTBEAT = 1
+OP_IDENTIFY = 2
+OP_STATUS_UPDATE = 3
+OP_VOICE_STATE_UPDATE = 4
+OP_VOICE_SERVER_PING = 5
+OP_RESUME = 6
+OP_RECONNECT = 7
+OP_REQUEST_GUILD_MEMBERS = 8
+OP_INVALID_SESSION = 9
+OP_HELLO = 10
+OP_HEARTBEAT_ACK = 11
