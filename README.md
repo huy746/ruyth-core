@@ -10,7 +10,6 @@ pip install ruythcore
 
 ### Bot Example
 ```bash
-import asyncio
 import ruythcore
 
 bot = ruythcore.Client("YOUR_BOT_TOKEN", prefix="!")
@@ -27,7 +26,7 @@ async def hello(ctx):
 async def on_ready(data):
     print("RuythCore Ready ✅")
 
-bot.run()
+bot.start()
 ```
 ##### Note: Replace YOUR_BOT_TOKEN with your TOKEN . Do not share TOKEN.
 
