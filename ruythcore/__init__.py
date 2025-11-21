@@ -25,5 +25,5 @@ __all__ = [
     "utils"
 ]
 
-__version__ = "1.0.3"
+__version__ = "1.0.4"
 __author__ = "ruythbot_huy"
