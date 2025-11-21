@@ -1,100 +1,43 @@
-# client.py
-
 import asyncio
-from .http import HTTPClient
 from .gateway import Gateway
-from .command import PrefixCommandManager
-from .slash import SlashManager
-from .voice import VoiceManager
-from .utils import ensure_task
-from .constants import DEFAULT_INTENTS
-
+from .http import HTTPClient
+from .commands import CommandManager
+from .slash import SlashCommandManager
+from .events import EventHandler
+from .context import Context
+from .models import Message, User
 
 class Client:
-    def __init__(self, token: str, prefix: str = "!"):
-        """
-        Khởi tạo bot Discord
-        token: token bot
-        prefix: ký tự bắt đầu command, ví dụ '!' cho !ping
-        """
+    def __init__(self, token, intents=0):
         self.token = token
-        self.prefix = prefix
+        self.intents = intents
         self.http = HTTPClient(token)
-        self.gateway = Gateway(token, DEFAULT_INTENTS, self._dispatch)
-        self.commands = PrefixCommandManager(self)
-        self.slash = SlashManager(self)
-        self.voice = VoiceManager(self)
-        self._events = {}
-        self.user = None
+        self.cmd = CommandManager()
+        self.slash = SlashCommandManager()
+        self.events = EventHandler()
+        self.gateway = Gateway(token, intents, self._dispatch)
+        self.prefix = "!"
 
-    # ------------------------
-    # decorators
-    # ------------------------
-    def command(self, name: str = None):
-        """Decorator cho text command"""
-        return self.commands.command(name)
+    def create_context(self, msg):
+        return Context(self, msg)
 
-    def slash_command(self, name: str, description: str = ""):
-        """Decorator cho slash command"""
-        return self.slash.command(name, description)
+    def command(self, name=None):
+        return self.cmd.command(name)
 
-    def event(self, fn):
-        """Decorator cho event async"""
-        self._events[fn.__name__] = fn
-        return fn
+    def slash_command(self, name=None, description=None):
+        return self.slash.slash(name, description)
 
-    # ------------------------
-    # dispatch event nội bộ
-    # ------------------------
-    async def _dispatch(self, ev_name, data):
-        if ev_name == "on_ready":
-            try:
-                self.user = data.get("user") or data.get("user", {})
-            except Exception:
-                pass
-            try:
-                await self.slash.register_global_commands()
-            except Exception:
-                pass
+    def event(self, name=None):
+        return self.events.on(name or "ready")
 
-        if ev_name == "on_message":
-            await self.commands.handle_message(data)
+    def start(self):
+        loop = asyncio.get_event_loop()
+        loop.create_task(self.gateway.connect())
+        loop.run_forever()
 
-        if ev_name == "on_interaction":
-            await self.slash.handle_interaction(data)
-
-        if ev_name in self._events:
-            await self._events[ev_name](data)
-
-    # ------------------------
-    # start / run
-    # ------------------------
-    async def start(self):
-        """Start bot async (có thể await trong test / CI)"""
-        await self.gateway.connect()
-
-    def run(self):
-        """
-        Chạy bot an toàn trong mọi môi trường asyncio
-        - Nếu đang có event loop: tạo task
-        - Nếu chưa có loop: asyncio.run()
-        """
-        try:
-            loop = asyncio.get_running_loop()
-        except RuntimeError:
-            loop = None
-
-        if loop and loop.is_running():
-            # Nếu đang có loop, tạo task và chờ 0s để tránh exit
-            asyncio.ensure_future(self.start())
-            loop.run_until_complete(asyncio.sleep(0))
-        else:
-            # Nếu chưa có loop, chạy bình thường
-            asyncio.run(self.start())
-
-
-# Alias cho branding
-class RuythCore(Client):
-    """Alias class name for branding"""
-    pass
-        
+    async def _dispatch(self, event, data):
+        if event=="MESSAGE_CREATE":
+            author = User(id=data['author']['id'], username=data['author'].get('username',''))
+            msg = Message(id=data['id'], channel_id=data['channel_id'], content=data.get('content',''), author=author, raw=data)
+            await self.cmd.run(self, msg)
+            await self.events.emit("message", msg)
