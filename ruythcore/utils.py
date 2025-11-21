@@ -1,15 +1,31 @@
-import asyncio
+import datetime
 
-def ensure_task(coro):
-    """
-    Helper to ensure an async coroutine is scheduled safely.
-    """
-    try:
-        loop = asyncio.get_running_loop()
-    except RuntimeError:
-        # Nếu chưa có loop, tạo mới
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-
-    return loop.create_task(coro)
+def snowflake_to_timestamp(snowflake: int) -> datetime.datetime:
     
+    discord_epoch = 1420070400000
+    timestamp = ((int(snowflake) >> 22) + discord_epoch) / 1000
+    return datetime.datetime.fromtimestamp(timestamp)
+
+def mention_user(user_id: str) -> str:
+    """
+    Trả về mention của user theo dạng <@id>
+    """
+    return f"<@{user_id}>"
+
+def mention_role(role_id: str) -> str:
+    """
+    Trả về mention của role theo dạng <@&id>
+    """
+    return f"<@&{role_id}>"
+
+def mention_channel(channel_id: str) -> str:
+    """
+    Trả về mention của channel theo dạng <#id>
+    """
+    return f"<#{channel_id}>"
+
+def is_valid_snowflake(snowflake: str) -> bool:
+    """
+    Kiểm tra xem một string có thể là Discord Snowflake hay không
+    """
+    return snowflake.isdigit() and len(snowflake) >= 17
