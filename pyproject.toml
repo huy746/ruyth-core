@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ruythcore"
-version = "1.0.2"
+version = "1.0.3"
 description = "A simple Discord bot library"
 readme = { file = "README.md", content-type = "text/markdown" }
 license = { file = "LICENSE" }
