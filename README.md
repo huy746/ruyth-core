@@ -40,6 +40,6 @@ python <namefile>.py
 ## Link
 [Docs](https://docsruythcore.blogspot.com)
 
-[Sever](https://discord.gg/MZVrynFHFE)
+[Server](https://discord.gg/MZVrynFHFE)
 
 [Discord API](https://discord.gg/discord-api)
