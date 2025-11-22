@@ -1,5 +1,8 @@
 include README.md
 include LICENSE
 include requirements.txt
-include ruythcore/_init_.py/*
+
+recursive-include ruythcore *.py
+
+
 
