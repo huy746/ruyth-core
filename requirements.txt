@@ -5,6 +5,7 @@ asyncio
 websockets
 functools
 typing
+dataclasses
 setuptools
 wheel
 twine
