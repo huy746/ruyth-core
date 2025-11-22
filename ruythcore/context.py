@@ -11,4 +11,3 @@ class Context:
                 f"/channels/{self.channel_id}/messages",
                 json={"content": content},
             )
-                
