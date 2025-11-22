@@ -15,4 +15,3 @@ class Message:
     content: str
     author: User
     raw: Dict[str, Any] = None
-  
