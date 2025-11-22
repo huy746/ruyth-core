@@ -11,4 +11,3 @@ class EventHandler:
     async def emit(self, name, *args, **kwargs):
         for func in self.listeners.get(name, []):
             await func(*args, **kwargs)
-                                      
