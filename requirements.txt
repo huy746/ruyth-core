@@ -3,6 +3,8 @@ pytest-cov
 aiohttp
 asyncio
 websockets
+functools
+typing
 setuptools
 wheel
 twine
