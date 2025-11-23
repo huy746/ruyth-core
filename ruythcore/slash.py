@@ -9,12 +9,20 @@ class SlashCommandManager:
             cmd_name = name or func.__name__
             self.slashes[cmd_name] = func
             @wraps(func)
-            async def wrapper(*args, **kwargs):
-                return await func(*args, **kwargs)
+            async def wrapper(ctx, *args, **kwargs):
+                return await func(ctx, *args, **kwargs)
             return wrapper
         return decorator
 
-    async def handle(self, client, data):
-        name = data.get("data", {}).get("name")
-        if name in self.slashes:
-            await self.slashes[name](client.create_context(data))
+    async def handle(self, client, interaction):
+        data = interaction.get("data", {})
+        name = data.get("name")
+        if not name:
+            return
+        handler = self.slashes.get(name)
+        if handler:
+            ctx = client.create_context(interaction, slash=True)
+            try:
+                await handler(ctx)
+            except Exception as e:
+                await client.events.emit("error", e)
