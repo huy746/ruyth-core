@@ -1,6 +1,7 @@
 # ruythcore
 [![discord](https://img.shields.io/badge/join_us-on_discord-5865F2?)](https://discord.gg/MZVrynFHFE)
-[![Python](https://img.shields.io/pypi/pyversions/discord.py.svg)](https://pypi.org/project/ruythcore)
+[![pypi](https://img.shields.io/pypi/v/ruythcore.svg)](https://pypi.org/project/ruythcore)
+[![Python](https://img.shields.io/pypi/pyversions/ruythcore.svg)](https://pypi.org/project/ruythcore)
 
 ## Install
 
