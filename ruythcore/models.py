@@ -5,7 +5,7 @@ from typing import Dict, Any
 class User:
     id: str
     username: str
-    discriminator: str = '0000'
+    discriminator: str = "0000"
     bot: bool = False
 
 @dataclass
