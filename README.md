@@ -12,19 +12,19 @@ pip install ruythcore
 ```bash
 import ruythcore
 
-bot = ruythcore.Client("YOUR_BOT_TOKEN", prefix="!")
+bot = ruythcore.Client("YOUR_TOKEN_HERE", prefix="!")
 
 @bot.command("ping")
 async def ping(ctx):
     await ctx.reply("🏓 Pong from RuythCore!")
 
-@bot.slash_command("hello", description="Say hello")
+@bot.slash_command("hello")
 async def hello(ctx):
-    await ctx.reply(f"Hello from RuythCore!")
+    await ctx.reply("Hello from RuythCore!")
 
-@bot.event
+@bot.events.on("ready")
 async def on_ready(data):
-    print("RuythCore Ready ✅")
+    print("Ready ✅")
 
 bot.start()
 ```
