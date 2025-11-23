@@ -1,10 +1,9 @@
-pytest
-pytest-cov
 aiohttp
 asyncio
 websockets
 functools
 typing
+inspect
 dataclasses
 setuptools
 wheel
