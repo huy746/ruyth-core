@@ -1,3 +1,5 @@
+import inspect
+
 class EventHandler:
     def __init__(self):
         self.listeners = {}
@@ -9,5 +11,12 @@ class EventHandler:
         return decorator
 
     async def emit(self, name, *args, **kwargs):
-        for func in self.listeners.get(name, []):
-            await func(*args, **kwargs)
+        for func in list(self.listeners.get(name, [])):
+            try:
+                if inspect.iscoroutinefunction(func):
+                    await func(*args, **kwargs)
+                else:
+                    func(*args, **kwargs)
+            except Exception as e:
+                # prevent event handler crash
+                print(f"[EventHandler] error in handler for {name}: {e}")
