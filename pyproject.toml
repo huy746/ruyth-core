@@ -31,17 +31,10 @@ classifiers = [
 
 dynamic = ["dependencies"]
 
-[project.optional-dependencies]
-
-test = [
-    "pytest",
-    "pytest-cov",
-]
-
 [project.urls]
 Documentation = "https://ruythcore.vercel.app/docs"
+Homepage = "https://github.com/huy746/ruyth-core"
 "Issue tracker" = "https://github.com/huy746/ruyth-core/issues"
-
 
 [tool.setuptools.dynamic]
 dependencies = { file = "requirements.txt" }
