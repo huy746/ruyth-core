@@ -1,6 +1,6 @@
 GATEWAY_URL = "wss://gateway.discord.gg/?v=10&encoding=json"
 HTTP_BASE = "https://discord.com/api/v10"
-USER_AGENT = "ruythcore/1.0"
+USER_AGENT = "ruythcore/1.0.5"
 INTENTS_ALL = 0b111111111111
 
 OP_DISPATCH = 0
