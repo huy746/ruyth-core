@@ -1,5 +1,5 @@
-import aiohttp
 import asyncio
+import importlib.util
 
 from .constants import HTTP_BASE, USER_AGENT
 
@@ -11,6 +11,19 @@ class HTTPException(Exception):
         self.message = message
 
 
+class MissingDependencyError(RuntimeError):
+    """Raised when an optional runtime dependency is required but missing."""
+
+    def __init__(self, package, feature):
+        super().__init__(
+            f"{package!r} is required to use {feature}. "
+            f"Install runtime dependencies with: pip install {package} "
+            "or pip install -r requirements.txt"
+        )
+        self.package = package
+        self.feature = feature
+
+
 class HTTPClient:
     def __init__(self, token):
         self.token = token
@@ -18,6 +31,10 @@ class HTTPClient:
 
     async def _ensure(self):
         if self._session is None or self._session.closed:
+            if importlib.util.find_spec("aiohttp") is None:
+                raise MissingDependencyError("aiohttp", "HTTP requests")
+            import aiohttp
+
             self._session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=15)
             )
@@ -34,42 +51,34 @@ class HTTPClient:
         headers = {**default_headers, **kwargs.pop("headers", {})}
         url = HTTP_BASE + path
 
-        for attempt in range(retry + 1):
+        for _ in range(retry + 1):
             async with self._session.request(
                 method,
                 url,
                 headers=headers,
                 **kwargs
             ) as resp:
-
                 text = await resp.text()
 
-                # 🔥 rate limit (Discord style)
                 if resp.status == 429:
                     try:
                         data = await resp.json()
                         retry_after = data.get("retry_after", 1)
-                    except:
+                    except Exception:
                         retry_after = 1
 
                     await asyncio.sleep(retry_after)
                     continue
 
-                # ❌ lỗi
                 if resp.status >= 400:
                     raise HTTPException(resp.status, text)
 
-                # ✅ success
                 if resp.headers.get("Content-Type", "").startswith("application/json"):
                     return await resp.json()
 
                 return text
 
         raise HTTPException(429, "Too many retries")
-
-    # =========================
-    # 📌 API HELPERS
-    # =========================
 
     async def send_message(self, channel_id, content):
         return await self.request(
@@ -114,10 +123,6 @@ class HTTPClient:
             f"/webhooks/{application_id}/{token}",
             json={"content": content},
         )
-
-    # =========================
-    # 🔧 SESSION CONTROL
-    # =========================
 
     async def close(self):
         if self._session and not self._session.closed:

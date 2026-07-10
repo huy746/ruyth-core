@@ -40,4 +40,4 @@ Homepage = "https://github.com/huy746/ruyth-core"
 dependencies = { file = "requirements.txt" }
 
 [tool.setuptools.packages.find]
-include = ["ruythcore"]
+include = ["ruythcore*"]
