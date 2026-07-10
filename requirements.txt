@@ -1,11 +1,2 @@
-aiohttp
-asyncio
-websockets
-functools
-typing
-inspect
-dataclasses
-setuptools
-wheel
-twine
-yarl
+aiohttp>=3.8
+websockets>=10
